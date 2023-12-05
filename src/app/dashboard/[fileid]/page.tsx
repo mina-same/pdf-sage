@@ -1,5 +1,5 @@
 import { trpc } from '@/app/_trpc/client';
-import ChatWrapper from '@/components/ChatWrapper';
+import ChatWrapper from '@/components/chat/ChatWrapper';
 import PdfRenderer from '@/components/PdfRenderer';
 import { db } from '@/db';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
