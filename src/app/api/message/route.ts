@@ -1,0 +1,24 @@
+import { db } from "@/db";
+import { sendMessageValidator } from "@/lib/vaildators/SendMessageValidator";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { NextRequest } from "next/server";
+
+export const POST = async (req: NextRequest) => {
+    const body = await req.json();
+
+    const {getUser} = getKindeServerSession();
+    const user = await getUser();
+
+    const {id: userId} = user;
+
+    if(!userId) return new Response('Unauthorized', {status: 401});
+
+    const {fileId, message} = sendMessageValidator.parse(body)
+
+    const file = await db.file.findFirst({
+        where:{
+            id: fileId,
+            userId: userId // enshower that the user is the owner of the file
+        }
+    })
+}
