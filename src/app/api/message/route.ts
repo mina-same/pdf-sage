@@ -21,4 +21,16 @@ export const POST = async (req: NextRequest) => {
             userId: userId // enshower that the user is the owner of the file
         }
     })
+
+    if(!file) return new Response('Not Found', {status: 404});
+
+    await db.message.create({
+        data:{
+            text: message,
+            isUserMessage: true,
+            userId,
+            fileId,
+        }
+    })
+
 }
